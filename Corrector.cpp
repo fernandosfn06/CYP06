@@ -13,15 +13,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #define LONGITUD 32
-char abecedario[LONGITUD + 6] = "abcdefghijklmnñopqrstuvwxyzáéíóú";
+char abecedario[LONGITUD + 6] = "abcdefghijklmnÃ±opqrstuvwxyzÃ¡Ã©Ã­Ã³Ãº";
 
-// Funciones públicas del proyecto
+// Funciones pÃºblicas del proyecto
 /*****************************************************************************************************************
-    DICCIONARIO: Esta función crea el diccionario completo
-    char * nombreArchivo : Nombre del archivo de donde se sacarán las palabras del diccionario
+    DICCIONARIO: Esta funciÃ³n crea el diccionario completo
+    char * nombreArchivo : Nombre del archivo de donde se sacarÃ¡n las palabras del diccionario
     char palabrasDiccionario[][TAMTOKEN] : Arreglo con las palabras completas del diccionario
-    int frecuencias[] : Arreglo con el número de veces que aparecen las palabras en el diccionario
-    int & numElementosDiccionario : Número de elementos en el diccionario
+    int frecuencias[] : Arreglo con el nÃºmero de veces que aparecen las palabras en el diccionario
+    int & numElementosDiccionario : NÃºmero de elementos en el diccionario
 ******************************************************************************************************************/
 void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int frecuencias[], int& numElementosDiccionario)
 {
@@ -60,10 +60,7 @@ void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int 
         }
         array[contador] = '\0';
 
-        for (i = 0; i < numElementosDiccionario && !bandera; i++) {
-            if (strcmp(palabrasDiccionario[i], array) == 0) {
-                frecuencias[i]++;
-                bandera = true;
+       
             }
         }
 
@@ -89,16 +86,16 @@ void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int 
     }
 }
 /*****************************************************************************************************************
-    ListaCandidatas: Esta función recupera desde el diccionario las palabras válidas y su peso
+    ListaCandidatas: Esta funciÃ³n recupera desde el diccionario las palabras vÃ¡lidas y su peso
     Regresa las palabras ordenadas por su peso
     char palabrasClonadas[][TAMTOKEN] : Lista de palabras clonadas
-    int numPalabrasClonadas : Número de palabras clonadas
+    int numPalabrasClonadas : NÃºmero de palabras clonadas
     char palabrasDiccionario[][TAMTOKEN] : Lista de palabras del diccionario
     int frecuencias[] : Lista de las frecuencias de las palabras
-    int numElementosDiccionario : Número de elementos en el diccionario
+    int numElementosDiccionario : NÃºmero de elementos en el diccionario
     char listaFinal[][TAMTOKEN] : Lista final de palabras a sugerir
     int pesos[] : Peso de las palabras en la lista final
-    int & numPalabrasLista : Número de elementos en listaFinal
+    int & numPalabrasLista : NÃºmero de elementos en listaFinal
 ******************************************************************************************************************/
 void ListaCandidatas(
     char palabrasClonadas[][TAMTOKEN],
@@ -145,10 +142,10 @@ void ListaCandidatas(
 
 
 /*****************************************************************************************************************
-    ClonaPalabras: toma una palabra y obtiene todas las combinaciones y permutaciones requeridas por el método
+    ClonaPalabras: toma una palabra y obtiene todas las combinaciones y permutaciones requeridas por el mÃ©todo
     char * palabraOriginal : Palabra a clonar
     char palabrasClonadas[][TAMTOKEN] : Lista de palabras clonadas
-    int & numPalabrasClonadas : Número de elementos en la lista
+    int & numPalabrasClonadas : NÃºmero de elementos en la lista
 ******************************************************************************************************************/
 void ClonaPalabras(
     char* palabraOriginal,
