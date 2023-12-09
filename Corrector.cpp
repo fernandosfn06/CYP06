@@ -176,15 +176,8 @@ numPalabrasClonadas = indice + 1;
         strcpy_s(palabrasClonadas[numPalabrasClonadas++], aux);
         strcpy_s(aux, palabraOriginal);
     }
-    strcpy_s(palabrasClonadas[numPalabrasClonadas++], palabraOriginal);
 
-    for (int j = 0; j < numPalabrasClonadas - 1; j++) {
-        for (int i = j + 1; i < numPalabrasClonadas; i++) {
-            if (strcmp(palabrasClonadas[j], palabrasClonadas[i]) > 0) {
-                strcpy_s(aux, palabrasClonadas[j]);
-                strcpy_s(palabrasClonadas[j], palabrasClonadas[i]);
-                strcpy_s(palabrasClonadas[i], aux);
-            }
+   
         }
     }
 }
