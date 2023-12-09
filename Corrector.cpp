@@ -23,55 +23,48 @@ char abecedario[LONGITUD + 6] = "abcdefghijklmnñopqrstuvwxyzáéíóú";
     int frecuencias[] : Arreglo con el número de veces que aparecen las palabras en el diccionario
     int & numElementosDiccionario : Número de elementos en el diccionario
 ******************************************************************************************************************/
-void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int frecuencias[], int& numElementosDiccionario)
-{
+void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int frecuencias[], int* numElementosDiccionario) {
     FILE* fp;
-    numElementosDiccionario = 0;
+    *numElementosDiccionario = 0;
     int i;
     char lectura, array[TAMTOKEN];
+
+    // Inicializar frecuencias a cero
     for (i = 0; i < NUMPALABRAS; i++)
         frecuencias[i] = 0;
 
     fopen_s(&fp, nombreArchivo, "r");
 
-    int contador = 0;
-    char puntuacion[] = " \t\n\r.,;() ";
-
     if (fp == NULL)
         return;
 
     while ((lectura = fgetc(fp)) != EOF) {
-        bool bandera = true;
+        bool esValido = true;
         lectura = tolower(lectura);
 
-        for (i = 0; i < strlen(puntuacion); i++)
-            if (puntuacion[i] == lectura)
-                bandera = false;
-
-        if (contador < TAMTOKEN && bandera) {
-            array[contador++] = lectura;
-            continue;
-        }
-        else if (contador == 0)
-            continue;
-        else if (contador == 1 && bandera) {
-            contador = 0;
-            continue;
-        }
-        array[contador] = '\0';
-
-       
-            }
+        // Verificar si el carácter es puntuación
+        if (esPuntuacion(lectura)) {
+            esValido = false;
         }
 
-        if (!bandera) {
-            strcpy_s(palabrasDiccionario[numElementosDiccionario], array);
-            frecuencias[numElementosDiccionario++]++;
+        if (*numElementosDiccionario < TAMTOKEN && esValido) {
+            array[*numElementosDiccionario++] = lectura;
+            continue;
         }
-        contador = 0;
+        else if (*numElementosDiccionario == 0)
+            continue;
+        else if (*numElementosDiccionario == 1 && esValido) {
+            *numElementosDiccionario = 0;
+            continue;
+        }
+
+        array[*numElementosDiccionario] = '\0';
+
+        // ...
+
+        *numElementosDiccionario = 0;
     }
     fclose(fp);
-
     for (int j = 0; j < numElementosDiccionario - 1; j++) {
         for (i = j + 1; i < numElementosDiccionario; i++) {
             if (strcmp(palabrasDiccionario[j], palabrasDiccionario[i]) > 0) {
