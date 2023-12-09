@@ -178,17 +178,13 @@ void ClonaPalabras(
         aux[i] = palabraOriginal[i];
     }
 
-    int contador = 0;
-    for (int i = 0; i < strlen(palabraOriginal) && strlen(palabraOriginal) != 1; i++) {
-        for (int j = 0; j < strlen(palabraOriginal); j++) {
-            if (j != i)
-                aux[contador++] = palabraOriginal[j];
-        }
-        aux[contador] = '\0';
-        strcpy_s(palabrasClonadas[numPalabrasClonadas++], aux);
-        strcpy_s(aux, palabraOriginal);
-        contador = 0;
-    }
+    int indice = 0;
+for (int i = 0; i < strlen(palabraOriginal) - 1; ++i) {
+    strcpy(palabrasClonadas[indice++], palabraOriginal);
+    palabraOriginal[i] = palabraOriginal[i + 1];
+}
+strcpy(palabrasClonadas[indice], palabraOriginal);
+numPalabrasClonadas = indice + 1;
 
     for (int i = 0; i < strlen(palabraOriginal) - 1; i++) {
         aux[i] = palabraOriginal[i + 1];
