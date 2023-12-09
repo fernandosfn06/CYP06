@@ -122,26 +122,7 @@ void ListaCandidatas(
         }
     }
 
-    // Ordenar la listaFinal por pesos en orden descendente
-    for (int i = 0; i < *numPalabrasLista - 1; ++i) {
-        for (int j = i + 1; j < *numPalabrasLista; ++j) {
-            if (pesos[i] < pesos[j]) {
-                // Intercambiar palabras y pesos
-                char tempWord[TAMTOKEN];
-                int tempWeight;
-
-                strcpy(tempWord, listaFinal[i]);
-                strcpy(listaFinal[i], listaFinal[j]);
-                strcpy(listaFinal[j], tempWord);
-
-                tempWeight = pesos[i];
-                pesos[i] = pesos[j];
-                pesos[j] = tempWeight;
-            }
-        }
-    }
-}
-
+    
 
 
 /*****************************************************************************************************************
