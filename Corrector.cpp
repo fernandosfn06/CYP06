@@ -97,6 +97,9 @@ void Diccionario(char* nombreArchivo, char palabrasDiccionario[][TAMTOKEN], int 
     int pesos[] : Peso de las palabras en la lista final
     int & numPalabrasLista : Número de elementos en listaFinal
 ******************************************************************************************************************/
+#include <stdbool.h>
+#include <string.h>
+
 void ListaCandidatas(
     char palabrasClonadas[][TAMTOKEN],
     int numPalabrasClonadas,
@@ -105,35 +108,42 @@ void ListaCandidatas(
     int numElementosDiccionario,
     char listaFinal[][TAMTOKEN],
     int pesos[],
-    int& numPalabrasLista)
+    int* numPalabrasLista)
 {
-    numPalabrasLista = 0;
-    for (int i = 0; i < numPalabrasClonadas; i++) {
-        for (int j = 0; j < numElementosDiccionario; j++) {
-            if (strcmp(palabrasClonadas[i], palabrasDiccionario[j]) == 0) {
-                bool bandera = false;
-                for (int k = 0; k < numPalabrasLista && !bandera; k++) {
-                    if (strcmp(listaFinal[k], palabrasDiccionario[j]) == 0)
-                        bandera = true;
-                }
-                if (bandera) continue;
-                strcpy_s(listaFinal[numPalabrasLista], palabrasClonadas[i]);
-                pesos[numPalabrasLista++] = frecuencias[j];
+    *numPalabrasLista = 0;
+
+    // Utilizar un arreglo de banderas para realizar un seguimiento de las palabras ya procesadas
+    bool procesadas[numPalabrasClonadas];
+    memset(procesadas, false, sizeof(procesadas));
+
+    for (int i = 0; i < numPalabrasClonadas; ++i) {
+        for (int j = 0; j < numElementosDiccionario; ++j) {
+            if (strcmp(palabrasClonadas[i], palabrasDiccionario[j]) == 0 && !procesadas[i]) {
+                strcpy(listaFinal[*numPalabrasLista], palabrasClonadas[i]);
+                pesos[*numPalabrasLista] = frecuencias[j];
+                (*numPalabrasLista)++;
+
+                // Marcar la palabra clonada como procesada
+                procesadas[i] = true;
             }
         }
     }
 
-    for (int i = 0; i < numPalabrasLista; i++) {
-        for (int j = 0; j < numPalabrasLista - 1; j++) {
-            if (pesos[j] < pesos[j + 1]) {
-                int auxiliar;
-                char cadenaAuxiliar[TAMTOKEN];
-                strcpy_s(cadenaAuxiliar, listaFinal[j + 1]);
-                auxiliar = pesos[j + 1];
-                strcpy_s(listaFinal[j + 1], listaFinal[j]);
-                pesos[j + 1] = pesos[j];
-                strcpy_s(listaFinal[j], cadenaAuxiliar);
-                pesos[j] = auxiliar;
+    // Ordenar la listaFinal por pesos en orden descendente
+    for (int i = 0; i < *numPalabrasLista - 1; ++i) {
+        for (int j = i + 1; j < *numPalabrasLista; ++j) {
+            if (pesos[i] < pesos[j]) {
+                // Intercambiar palabras y pesos
+                char tempWord[TAMTOKEN];
+                int tempWeight;
+
+                strcpy(tempWord, listaFinal[i]);
+                strcpy(listaFinal[i], listaFinal[j]);
+                strcpy(listaFinal[j], tempWord);
+
+                tempWeight = pesos[i];
+                pesos[i] = pesos[j];
+                pesos[j] = tempWeight;
             }
         }
     }
